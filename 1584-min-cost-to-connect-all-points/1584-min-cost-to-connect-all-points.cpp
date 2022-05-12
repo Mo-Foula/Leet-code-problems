@@ -1,98 +1,52 @@
 class Solution {
 public:
-    class DSU {
-    int* parent;
-    int* rank;
-
-public:
-    DSU(int n)
-    {
-        parent = new int[n];
-        rank = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            parent[i] = -1;
-            rank[i] = 1;
+int minCostConnectPoints(vector<vector<int>> &points) {
+//    Graph g(points.size());
+    vector<vector<int> > myGraph(points.size(), vector<int> (points.size()));
+    int val;
+    for (int i = 0; i < points.size(); ++i) {
+        for (int j = i + 1; j < points.size(); ++j) {
+            val = abs((points[i][0] - points[j][0])) + abs((points[i][1] - points[j][1]));
+            myGraph[i][j] = val;
+            myGraph[j][i] = val;
         }
     }
+//    return g.kruskals_minimumspanningtree();
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<> > pq;
+    map<int, bool> visited;
+    pq.push({0, 0});
+    map<int, int> scores,parent;
+    scores[0] = 0;
+    int child;
+    while (!pq.empty()) {
+        auto element = pq.top();
+        pq.pop();
+        if(visited[element.second])
+            continue;
+        visited[element.second] = true;
+        for (int i = 0; i < myGraph[element.second].size(); i++) {
+            if (!visited[i]) {
+                parent[i] = element.second;
+                if (!scores[i]) {
+                    scores[i] = myGraph[element.second][i];
+                    pq.push({myGraph[element.second][i],i});
+                } else{
+                    if(scores[i] > myGraph[element.second][i]){
+                    scores[i] = myGraph[element.second][i];
+                    pq.push({myGraph[element.second][i],i});
+                    }
+                }
 
-    // Find function
-    int find(int i)
-    {
-        if (parent[i] == -1)
-            return i;
-
-        return parent[i] = find(parent[i]);
-    }
-    // union function
-    void unite(int x, int y)
-    {
-        int s1 = find(x);
-        int s2 = find(y);
-
-        if (s1 != s2) {
-            if (rank[s1] < rank[s2]) {
-                parent[s1] = s2;
-                rank[s2] += rank[s1];
-            }
-            else {
-                parent[s2] = s1;
-                rank[s1] += rank[s2];
-            }
-        }
-    }
-};
-
-class Graph {
-    vector<vector<int> > edgelist;
-    int V;
-
-public:
-    Graph(int V) { this->V = V; }
-
-    void addEdge(int x, int y, int w)
-    {
-        edgelist.push_back({ w, x, y });
-    }
-
-    int kruskals_mst()
-    {
-        // 1. Sort all edges
-        sort(edgelist.begin(), edgelist.end());
-
-        // Initialize the DSU
-        DSU s(V);
-        int ans = 0;
-        cout << "Following are the edges in the "
-                "constructed MST"
-             << endl;
-        for (auto edge : edgelist) {
-            int w = edge[0];
-            int x = edge[1];
-            int y = edge[2];
-
-            // take that edge in MST if it does form a cycle
-            if (s.find(x) != s.find(y)) {
-                s.unite(x, y);
-                ans += w;
-                cout << x << " -- " << y << " == " << w
-                     << endl;
             }
         }
-        cout << "Minimum Cost Spanning Tree: " << ans;
-        return ans;
-    }
-};
 
-
-int minCostConnectPoints(vector<vector<int>>& points) {
-    Graph g(points.size());
-    for (int i = 0; i <points.size() ; ++i) {
-        for (int j = i+1; j <points.size() ; ++j) {
-            g.addEdge(i,j,abs((points[i][0] - points[j][0])) +abs(( points[i][1] - points[j][1])));
-        }
     }
-    return g.kruskals_mst();
+    int sum = 0;
+    for (int k = 1; k <myGraph.size() ; ++k) {
+        sum += scores[k];
+    }
+    return sum;
+    //     score node
 }
 
 };
