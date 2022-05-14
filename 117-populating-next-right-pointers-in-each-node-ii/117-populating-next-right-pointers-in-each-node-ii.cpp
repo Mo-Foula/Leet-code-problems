@@ -19,16 +19,10 @@ public:
 class Solution {
 public:
     
-    bool isLogOf2(double n){
-        double x = log2(n);
-        return x == floor(x);
-    }
-    
     Node* connect(Node* root) {
         vector<vector<Node*>> vec ;
         queue<Node*> q;
         q.push(root);
-        map<int,vector<Node*> > m;
         vec.push_back({root});
         int level = 0;
         vec.push_back({});
