@@ -4,6 +4,7 @@ void merge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
     vector<int> ret(m + n);
     if (m == 0 && n == 0) {
         return;
+        
     }
     if (m == 0){
           nums1 =  nums2;
