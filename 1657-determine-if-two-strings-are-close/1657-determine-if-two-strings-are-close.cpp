@@ -30,8 +30,8 @@ class Solution
         unordered_map<char, int> m1 = makeFrequencyMapOfStringChars(word1);
         unordered_map<char, int> m2 = makeFrequencyMapOfStringChars(word2);
 
-    multiset<int> s1 = frequenciesMapToSet(m1);
-    multiset<int> s2 = frequenciesMapToSet(m2);
+        multiset<int> s1 = frequenciesMapToSet(m1);
+        multiset<int> s2 = frequenciesMapToSet(m2);
 
         multiset<int>::iterator it1 = s1.begin();
         multiset<int>::iterator it2 = s2.begin();
