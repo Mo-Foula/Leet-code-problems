@@ -4,15 +4,32 @@
  * @return {number}
  */
 var findKthPositive = function(arr, k) {
-    const missing = []
-    let current = 1
-    let index = 0
-    while (missing.length < k){
-        if (arr[index] === current)
-            ++index
-        else
-            missing.push(current)
-        ++current
+    // arr = [2,3,4,7,11], k = 5
+    
+    // 1- Generate missing array
+    //      Generated: [1,5,6,8,9,10,12,13,...]
+    
+    // 2- Return kth element
+    
+    
+    let i = 1
+    // 1.1- Create generated array
+    let kth = 0
+    let kthCounter = 0
+    // 1.2- Generate k elements
+    while (kthCounter < k){
+        // Keep generating
+        
+        // Push i if i doesn't exist in arr
+        if (arr.indexOf(i) == -1){
+            // Not found
+            ++kthCounter
+            kth = i
+        }
+        ++i
     }
-    return missing[k-1]
+    console.log(kth)
+    return kth
 };
+
+    
