@@ -13,6 +13,7 @@ var findKthPositive = function(arr, k) {
     
     
     let i = 1
+    let index = 0
     // 1.1- Create generated array
     let kth = 0
     let kthCounter = 0
@@ -21,14 +22,14 @@ var findKthPositive = function(arr, k) {
         // Keep generating
         
         // Push i if i doesn't exist in arr
-        if (arr.indexOf(i) == -1){
+        if (arr[index] !== i){
             // Not found
             ++kthCounter
             kth = i
-        }
+        } else 
+            ++index
         ++i
     }
-    console.log(kth)
     return kth
 };
 
